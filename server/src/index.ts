@@ -6,7 +6,7 @@ import rateLimit from "express-rate-limit";
 import diagnosisRouter from "./routes/diagnosis";
 
 const app = express();
-
+app.set("trust proxy", 1);
 app.use(helmet());
 app.use(cors()); // TODO étape "sécurité" : restreindre aux origines de l'app en prod
 app.use(express.json({ limit: "50kb" })); // limite la taille des messages (section 33)
