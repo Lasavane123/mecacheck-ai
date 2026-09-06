@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "MecaCheck AI",
+    "slug": "mecacheck-ai",
+    "scheme": "mecacheckai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+  
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.mecacheck.ai"
+    },
+    "android": {
+      "package": "com.mecacheck.ai",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0F14"
+      }
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    }
+  }
+}
