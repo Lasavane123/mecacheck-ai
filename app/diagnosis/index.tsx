@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 import { colors, spacing, radius } from "@/constants/theme";
 import { TextField } from "@/components/TextField";
 import { PrimaryButton } from "@/components/PrimaryButton";
@@ -43,6 +44,25 @@ export default function DiagnosisScreen() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [outcome, setOutcome] = useState<DiagnosisOutcome | null>(null);
+  async function handleScanCode() {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (!permission.granted) {
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ["images"],
+      quality: 1,
+    });
+
+    if (result.canceled) {
+      return;
+    }
+
+    // La lecture OCR du code sera ajoutée à l'étape suivante.
+    console.log("Photo du code diagnostic :", result.assets[0]?.uri);
+  }
 
   // Recharge la liste à chaque retour sur l'écran (ex. après avoir ajouté un véhicule).
   useFocusEffect(
@@ -138,6 +158,11 @@ export default function DiagnosisScreen() {
           <Text style={styles.sectionLabel}>Informations utiles (facultatif)</Text>
           <ChipSelect options={QUICK_CATEGORIES} value={selectedCategory} onChange={setSelectedCategory} />
         </View>
+        <PrimaryButton
+          label="📷 Scanner un code diagnostic"
+          variant="secondary"
+          onPress={handleScanCode}
+        />
 
         <PrimaryButton
           label="🧠 Analyser le problème"
